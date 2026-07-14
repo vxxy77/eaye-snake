@@ -104,8 +104,8 @@ var sL1=$('sL1'),sL2=$('sL2'),sTD=$('sTD'),sB1=$('sBar'),sB2=$('sBarD');
 var ab=$('ab'),pB=$('pBtn'),rB=$('rBtn'),fMB=$('fMenu');
 var lbO=$('lbO'),lbT=$('lbT'),lbC=$('lbC'),lbX=$('lbX'),lbB=$('lbBtn');
 var aO=$('achO'),aGrid=$('achG'),aX=$('achX'),aB=$('achBtn'),aP=$('achP');
-var eO=$('edO'),eGrid=$('edGr'),eC=$('edCd'),eN=$('edCt'),eCl=$('edClear'),ePl=$('edPlay'),eBk=$('edBack');
-var W=$('W'),plT=$('plToggle'),skD1=$('skDots1'),skD2=$('skDots2'),cp1=$('cp1'),cp2=$('cp2');
+var eO=$('edO'),eGrid=$('edGr'),eC=$('edCd'),eN=$('edCt'),eCl=$('edCl'),ePl=$('edPl'),eBk=$('edBk');
+var W=$('W'),skD1=$('skD1'),skD2=$('skD2'),cp1=$('cp1'),cp2=$('cp2');
 var toast=$('toast'),rBadge=$('rBadge'),fsB=$('fsBtn');
 
 // Constants
@@ -280,7 +280,7 @@ document.getElementById('sOff').addEventListener('click',function(){snd=false;th
 fsB.addEventListener('click',function(){if(document.fullscreenElement){document.exitFullscreen();}else if(W.requestFullscreen){W.requestFullscreen();}});
 
 // Skin pickers (2)
-[skD1,skD2].forEach(function(el,i){var isP1=i===0,cp=i===0?cp1:cp2;
+[skD1,skD2].forEach(function(el,i){if(!el)return;var isP1=i===0,cp=i===0?cp1:cp2;
   el.addEventListener('click',function(e){var d=e.target.closest('.sd');if(!d||d.classList.contains('cust'))return;var sk=d.dataset.sk;el.querySelectorAll('.sd').forEach(function(x){x.classList.remove('act');});d.classList.add('act');if(isP1){sk1=sk;sSave();}else{sk2=sk;sSave();}});
   cp.addEventListener('input',function(){var col=cp.value;if(isP1){sk1='cu';c1=col;}else{sk2='cu';c2=col;}sSave();var cd=el.querySelector('.cust');if(cd){cd.style.background=col;el.querySelectorAll('.sd').forEach(function(x){x.classList.remove('act');});cd.classList.add('act');}});
   el.querySelector('.cust').addEventListener('click',function(){cp.click();cp.style.display='inline-block';});
