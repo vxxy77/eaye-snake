@@ -11,7 +11,7 @@ body{background:var(--body-bg);display:flex;justify-content:center;align-items:c
 .tag{background:var(--accent);color:#fff;padding:1px 8px;border-radius:10px;font-size:10px;font-weight:700;white-space:nowrap;transition:background .3s}
 .mute{border:none;background:var(--btn-bg);border-radius:50%;width:26px;height:26px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;flex-shrink:0;line-height:1}.mute:hover{background:var(--btn-hover)}
 canvas{display:block;background:var(--canvas-bg);border-radius:8px;width:100%;aspect-ratio:1/1;touch-action:none;border:1px solid var(--canvas-border);transition:background .3s,border-color .3s}
-.btns{display:flex;gap:6px;justify-content:center;margin-top:6px}
+.btns{display:flex;gap:5px;justify-content:center;margin-top:6px;flex-wrap:wrap}
 .btn{border:none;border-radius:20px;padding:6px 20px;font-size:13px;font-weight:600;cursor:pointer;background:var(--btn-bg);color:var(--btn-text);transition:background .3s,color .3s}.btn:hover{background:var(--btn-hover)}
 .btn.ac{background:var(--accent);color:#fff}.btn.ac:hover{background:var(--accent-dark)}
 .hint{text-align:center;font-size:10px;color:rgba(0,0,0,.25);margin-top:4px;transition:color .3s}
@@ -25,7 +25,7 @@ canvas{display:block;background:var(--canvas-bg);border-radius:8px;width:100%;as
 .mb .mi{font-size:20px;display:block;line-height:1.2}.mb .mn{font-size:11px;font-weight:700;color:var(--text-primary);margin-top:2px}.mb .md{font-size:8px;color:var(--text-secondary);margin-top:1px}
 .pp{display:flex;gap:6px;margin-top:6px;align-items:center;font-size:10px;color:var(--text-secondary);justify-content:center}.ppb{border:none;background:var(--btn-bg);border-radius:14px;padding:4px 18px;font-size:12px;font-weight:700;cursor:pointer;color:var(--btn-text);transition:.2s;min-width:52px}.ppb.on{background:var(--accent);color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.12)}.ppb:hover{background:var(--btn-hover);transform:scale(1.05)}.ppb.on:hover{background:var(--accent-dark);transform:scale(1.05)}
 .dr{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap;justify-content:center}.drb{border:none;background:var(--btn-bg);border-radius:12px;padding:3px 10px;font-size:10px;font-weight:600;cursor:pointer;color:var(--btn-text);transition:.2s;min-width:36px}.drb.on{background:var(--accent);color:#fff}.drb:hover{background:var(--btn-hover);transform:scale(1.05)}.drb.on:hover{background:var(--accent-dark);transform:scale(1.05)}
-.mf{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap;justify-content:center}
+.gr{display:flex;gap:4px;justify-content:center;margin-top:4px;align-items:center}.grb{border:none;background:var(--btn-bg);border-radius:10px;padding:2px 10px;font-size:9px;font-weight:600;cursor:pointer;color:var(--btn-text);transition:.2s;min-width:30px;line-height:1.6}.grb.on{background:var(--accent);color:#fff}.grb:hover{background:var(--btn-hover)}.grb.on:hover{background:var(--accent-dark)}
 .mf span{background:var(--btn-bg);padding:3px 10px;border-radius:8px;font-size:9px;color:var(--text-secondary);cursor:default}
 .mf .abt{border:none;background:var(--btn-bg);padding:3px 10px;border-radius:8px;font-size:9px;color:var(--text-secondary);cursor:pointer;transition:.2s}.mf .abt:hover{background:var(--accent);color:#fff}
 #cd{font-size:72px;font-weight:900;color:var(--accent);text-shadow:0 4px 20px rgba(0,0,0,.12)}
@@ -39,17 +39,19 @@ canvas{display:block;background:var(--canvas-bg);border-radius:8px;width:100%;as
 </div>
 <canvas id="C" width="800" height="800"></canvas>
 <div class="hint" id="hintT"><kbd>↑↓←→</kbd> 或 <kbd>WASD</kbd> 控制 · <kbd>空格</kbd> 暂停 · <kbd>ESC</kbd> 菜单</div>
-<div class="btns"><button class="btn" id="pB">⏸ 暂停</button><button class="btn ac" id="rB">🔄 重新开始</button></div>
+<div class="btns"><button class="btn" id="pB">⏸ 暂停</button><button class="btn ac" id="rB">🔄 重新开始</button><button class="btn" id="mBackB">返回菜单</button></div>
+<div class="theme-row" id="tR"></div>
+<div class="gr" id="gridCtrl"><span style="font-size:9px;color:var(--text-secondary)">📏</span><button class="grb" id="gOff">关</button><button class="grb" id="gLight">淡</button><button class="grb on" id="gMid">中</button><button class="grb" id="gDark">深</button></div>
 <div class="overlay" id="about"><h2 style="font-size:18px;margin-bottom:2px">📖 关于 Eaye蛇</h2><p style="font-size:9px;margin-bottom:4px">v3.10 · 全功能贪吃蛇</p><div id="abtContent" style="width:100%;max-width:340px;overflow-y:auto;flex:1;padding:0 4px;font-size:10px;line-height:1.6;color:var(--text-primary)"></div><button class="small" id="abtClose" style="margin-top:4px">关闭</button></div>
 <div class="overlay" id="cdOver"><h2 id="cdNum" style="font-size:72px;font-weight:900;color:var(--accent);text-shadow:0 4px 20px rgba(0,0,0,.12)">3</h2></div>
-<div class="overlay on" id="m"><h2 style="font-size:22px;margin-bottom:0;display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,#1a73e8,#7c4dff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;letter-spacing:1.5px;font-family:'Georgia','Palatino Linotype','Times New Roman',serif"><svg viewBox="0 0 32 32" style="width:26px;height:26px"><defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a73e8"/><stop offset="100%" stop-color="#7c4dff"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(#lg2)"/><path d="M7 21L13 11L17 17L21 7L25 15" stroke="#fff" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="15" r="3.5" fill="#fff"/></svg>Eaye蛇</h2><p style="margin-bottom:4px;font-size:10px">Eaye蛇送给我的彤彤宝宝</p><div class="mg" id="modeGrid"></div><div class="pp"><span>👥</span><button class="ppb on" id="p1B">1P</button><button class="ppb" id="p2B">2P</button></div><div class="dr"><span>⚡</span><button class="drb" id="chillB">休闲</button><button class="drb" id="easyB">简单</button><button class="drb on" id="normB">普通</button><button class="drb" id="hardB">困难</button><button class="drb" id="challB">挑战</button><button class="drb" id="extremeB">极限</button></div><div class="theme-row" id="tR" style="margin-top:5px"></div><div class="mf"><span>↑↓←→ / WASD</span><span>空格 暂停</span><span>ESC 菜单</span><button class="abt" id="abtBtn">📖 关于</button></div></div>
+<div class="overlay on" id="m"><h2 style="font-size:22px;margin-bottom:0;display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,#1a73e8,#7c4dff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;letter-spacing:1.5px;font-family:'Georgia','Palatino Linotype','Times New Roman',serif"><svg viewBox="0 0 32 32" style="width:26px;height:26px"><defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a73e8"/><stop offset="100%" stop-color="#7c4dff"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(#lg2)"/><path d="M7 21L13 11L17 17L21 7L25 15" stroke="#fff" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="15" r="3.5" fill="#fff"/></svg>Eaye蛇</h2><p style="margin-bottom:4px;font-size:10px">Eaye蛇送给我的彤彤宝宝</p><div class="mg" id="modeGrid"></div><div class="pp"><span>👥</span><button class="ppb on" id="p1B">1P</button><button class="ppb" id="p2B">2P</button></div><div class="dr"><span>⚡</span><button class="drb" id="chillB">休闲</button><button class="drb" id="easyB">简单</button><button class="drb on" id="normB">普通</button><button class="drb" id="hardB">困难</button><button class="drb" id="challB">挑战</button><button class="drb" id="extremeB">极限</button></div><div class="mf"><span>↑↓←→ / WASD</span><span>空格 暂停</span><span>ESC 菜单</span><button class="abt" id="abtBtn">📖 关于</button></div></div>
 <div class="overlay" id="p"><h2>⏸ 已暂停</h2><p id="pStats" style="margin-bottom:6px;font-size:10px">蛇长: 3节 · 已吃: 0个</p><button class="big" id="resB">▶ 继续</button><button class="btn ac" id="rpB" style="margin-top:6px;padding:8px 24px">🔄 重新开始</button><button class="small" id="pmB" style="margin-top:4px">返回菜单</button></div>
 <div class="overlay" id="go"><h2 id="goH">💀 游戏结束</h2><p id="goP">得分: <b id="goS">0</b></p><button class="big" id="goR">再来一局</button><button class="small" id="goM">返回菜单</button></div>
 </div>
 <script>
 var C=document.getElementById('C'),ctx=C.getContext('2d');
 var sEl=document.getElementById('s'),mEl=document.getElementById('m'),goEl=document.getElementById('go'),pEl=document.getElementById('p');
-var pB=document.getElementById('pB'),rB=document.getElementById('rB');
+var pB=document.getElementById('pB'),rB=document.getElementById('rB'),mBackB=document.getElementById('mBackB');
 var goS=document.getElementById('goS'),goR=document.getElementById('goR'),goM=document.getElementById('goM');
 var tR=document.getElementById('tR'),scD=document.getElementById('scD'),modeTag=document.getElementById('modeTag');
 var goH=document.getElementById('goH'),goP=document.getElementById('goP');
@@ -59,7 +61,7 @@ var p1B=document.getElementById('p1B'),p2B=document.getElementById('p2B');
 var cdOver=document.getElementById('cdOver'),cdNum=document.getElementById('cdNum');
 var muteBtn=document.getElementById('muteBtn'),pStats=document.getElementById('pStats');
 var chillB=document.getElementById('chillB'),easyB=document.getElementById('easyB'),normB=document.getElementById('normB'),hardB=document.getElementById('hardB'),challB=document.getElementById('challB'),extremeB=document.getElementById('extremeB');
-var muted=false,diff='normal';
+var muted=false,diff='normal',gridOp=.08;
 var DIFF={chill:{spd:200,mult:.5},easy:{spd:170,mult:.7},normal:{spd:140,mult:1},hard:{spd:110,mult:1.5},chall:{spd:85,mult:2},extreme:{spd:60,mult:3}};
 var SZ=40,CL=C.width/SZ,my=Math.floor(SZ/2);
 var S={p:'menu',t:null,sn:[],sn2:[],fd:[],sc:0,sc2:0,pa:false,mult:1,multTimer:0,spd:140,mode:'classic',lvl:1,tLeft:0,walls:[],items:[],aiSn:null,aiSc:0,aiDir:null,shield:0,itemTmr:0,dailySeed:'',dailyBest:0,is2P:false,foodEaten:0,popups:[],particles:[],foodAni:0,runTime:0};
@@ -166,6 +168,7 @@ function init(){
   var md=getMod();
   S={p:'menu',t:null,sn:[],sn2:[],fd:[],sc:0,sc2:0,pa:false,mult:1,multTimer:0,spd:DIFF[diff].spd,mode:S.mode||'classic',lvl:S.lvl||1,tLeft:S.mode==='timed'?60:(S.mode==='daily'?60:0),walls:[],items:[],aiSn:null,aiSc:0,aiDir:null,shield:0,itemTmr:0,dailySeed:S.mode==='daily'?getSeed():'',dailyBest:S.dailyBest||0,is2P:is2P,foodEaten:0,popups:[],particles:[],foodAni:0,runTime:0};
   if(S.mode==='maze'||S.mode==='daily')genMaze();
+  if(S.mode==='levels'){S.walls=[];var n=Math.min(S.lvl,8);for(var wi=0;wi<n*4;wi++){var f=fc(S.walls);if(f.length>0){var p=f[rnd(0,f.length-1)];S.walls.push(p);}}}
   if(S.mode==='ai'||(S.mode==='vs'&&!S.is2P))initAI();
   S.sn.push({b:[{x:4,y:my},{x:3,y:my},{x:2,y:my}],d:'right',n:'right'});
   if(S.is2P)S.sn2.push({b:[{x:35,y:my+5},{x:36,y:my+5},{x:37,y:my+5}],d:'left',n:'left'});
@@ -211,7 +214,7 @@ function tk(){
         S.pa=false;S.lvl=_lvl+1;S.spd=Math.max(70,140-(S.lvl-1)*10);
         S.sn=[{b:[{x:4,y:my},{x:3,y:my},{x:2,y:my}],d:'right',n:'right'}];
         if(S.is2P)S.sn2=[{b:[{x:35,y:my+5},{x:36,y:my+5},{x:37,y:my+5}],d:'left',n:'left'}];
-        S.fd=[];spawnFoodNear();S.mult=1;S.multTimer=0;S.shield=0;S.items=[];S.popups=[];S.particles=[];
+        S.fd=[];S.walls=[];var n=Math.min(S.lvl,8);for(var wi=0;wi<n*4;wi++){var f=fc(S.walls);if(f.length>0){var p=f[rnd(0,f.length-1)];S.walls.push(p);}}spawnFoodNear();S.mult=1;S.multTimer=0;S.shield=0;S.items=[];S.popups=[];S.particles=[];
         S.t=setInterval(tk,S.spd);modeTag.textContent=is2P?'2P 第'+S.lvl+'关':'第'+S.lvl+'关';
         updateHdr();
       },800);
@@ -262,7 +265,7 @@ function showModes(){
   updatePP();
 }
 function draw(){var t=THEMES[curT];ctx.clearRect(0,0,C.width,C.height);
-  ctx.strokeStyle=t.grid;ctx.lineWidth=.3;
+  ctx.strokeStyle=gridOp>0?'rgba(0,0,0,'+gridOp+')':'transparent';ctx.lineWidth=.5;
   for(var i=0;i<=SZ;i++){ctx.beginPath();ctx.moveTo(i*CL,0);ctx.lineTo(i*CL,C.height);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*CL);ctx.lineTo(C.width,i*CL);ctx.stroke();}
   if(S.walls&&S.walls.length>0){S.walls.forEach(function(w){ctx.fillStyle='rgba(0,0,0,.08)';ctx.fillRect(w.x*CL,w.y*CL,CL,CL);ctx.strokeStyle='rgba(0,0,0,.12)';ctx.lineWidth=.5;ctx.strokeRect(w.x*CL,w.y*CL,CL,CL);});if(t.id==='night'){S.walls.forEach(function(w){ctx.fillStyle='rgba(255,255,255,.06)';ctx.fillRect(w.x*CL,w.y*CL,CL,CL);});}}
   S.fd.forEach(function(f){var ft=getFood(f.type),cx=f.x*CL,cy=f.y*CL;var sc=S.foodAni>0?1+.15*Math.sin(S.foodAni):1;ctx.save();ctx.translate(cx+CL/2,cy+CL/2);ctx.scale(sc,sc);ctx.translate(-CL/2,-CL/2);ctx.fillStyle='rgba(255,255,255,.85)';ctx.beginPath();ctx.arc(CL/2,CL/2,CL/2-1,0,Math.PI*2);ctx.fill();ctx.strokeStyle='rgba(0,0,0,.08)';ctx.lineWidth=.5;ctx.stroke();ctx.font='19px "Segoe UI Emoji","Apple Color Emoji",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.strokeStyle='rgba(0,0,0,.15)';ctx.lineWidth=2;ctx.strokeText(ft.emoji,CL/2,CL/2+1);ctx.fillStyle='#000';ctx.fillText(ft.emoji,CL/2,CL/2+1);ctx.restore();if(ft.pts>0){ctx.fillStyle='rgba(0,0,0,.5)';ctx.font='bold 8px sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText('+'+ft.pts,cx+CL/2,cy+CL/2-7);}});
@@ -309,7 +312,9 @@ C.addEventListener('touchend',function(e){if(S.p!=='play'||S.pa||(!S.is2P&&S.mod
 function modeReStart(){S.lvl=S.lvl||1;init();playSnd('click');start();}
 goR.onclick=modeReStart;rB.onclick=modeReStart;rpB.onclick=modeReStart;
 resB.onclick=function(){if(S.pa)tp();};
+pB.onclick=function(){if(S.p==='play')tp();};
 pmB.onclick=function(){bk();showModes();};
+mBackB.onclick=function(){bk();showModes();};
 goM.onclick=function(){bk();showModes();};
 p1B.onclick=function(){is2P=false;updatePP();playSnd('click');};
 p2B.onclick=function(){is2P=true;updatePP();playSnd('click');};
@@ -321,6 +326,12 @@ hardB.onclick=function(){diff='hard';updateDiff();playSnd('click');};
 challB.onclick=function(){diff='chall';updateDiff();playSnd('click');};
 extremeB.onclick=function(){diff='extreme';updateDiff();playSnd('click');};
 var abtEl=document.getElementById('about'),abtBtn=document.getElementById('abtBtn'),abtClose=document.getElementById('abtClose'),abtC=document.getElementById('abtContent');
+var gOff=document.getElementById('gOff'),gLight=document.getElementById('gLight'),gMid=document.getElementById('gMid'),gDark=document.getElementById('gDark');
+function updateGridBtn(){gOff.classList.toggle('on',gridOp===0);gLight.classList.toggle('on',gridOp===.03);gMid.classList.toggle('on',gridOp===.08);gDark.classList.toggle('on',gridOp===.2);}
+gOff.onclick=function(){gridOp=0;updateGridBtn();if(S.p==='play'||S.pa)draw();};
+gLight.onclick=function(){gridOp=.03;updateGridBtn();if(S.p==='play'||S.pa)draw();};
+gMid.onclick=function(){gridOp=.08;updateGridBtn();if(S.p==='play'||S.pa)draw();};
+gDark.onclick=function(){gridOp=.2;updateGridBtn();if(S.p==='play'||S.pa)draw();};
 abtBtn.onclick=function(){
   var stG=ls('st_games',0),stF=ls('st_food',0),stL=ls('st_longest',0),stS=ls('st_score',0),stT=ls('st_maxtime',0);
   var hsList='';MODES.forEach(function(m){var h=getHS(m.id);if(h>0)hsList+=m.icon+m.label+':'+h+' ';});
