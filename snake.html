@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"><title>Eaye蛇</title><link rel="manifest" href="manifest.json"><style>@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"><title>Eaye蛇</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cdefs%3E%3ClinearGradient id='fi' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%231a73e8'/%3E%3Cstop offset='100%25' stop-color='%237c4dff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='2' y='2' width='32' height='32' rx='8' fill='url(%23fi)'/%3E%3Cpath d='M8 26l6-12 4 6 4-10 6 8' stroke='white' stroke-width='2.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='28' cy='18' r='3.5' fill='white'/%3E%3C/svg%3E"><link rel="manifest" href="manifest.json"><style>@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 :root{--body-bg:#f0f2f5;--wrap-bg:#fff;--wrap-shadow:0 4px 24px rgba(0,0,0,.08);--accent:#1a73e8;--accent-dark:#0d47a1;--text-primary:#222;--text-secondary:#555;--score-bg:#eef2f7;--score-text:#555;--score-num:#1a73e8;--canvas-bg:#f8f9fb;--canvas-border:#e4e8ef;--btn-bg:#eef2f7;--btn-text:#555;--btn-hover:#e0e5ed;--overlay-bg:rgba(255,255,255,.96);--overlay-text:#222;--food-color:#ff3b3b;--grid-color:rgba(0,0,0,.01)}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--body-bg);display:flex;justify-content:center;align-items:center;min-height:100dvh;height:100dvh;font-family:Segoe UI,sans-serif;padding:8px;transition:background .3s;overflow:hidden}
@@ -44,7 +44,7 @@ canvas{display:block;background:var(--canvas-bg);border-radius:8px;width:auto;he
 <div class="theme-row" id="tR"></div>
 <div class="gr" id="gridCtrl"><span style="font-size:9px;color:var(--text-secondary)">📏</span><button class="grb" id="gOff">关</button><button class="grb" id="gLight">淡</button><button class="grb on" id="gMid">中</button><button class="grb" id="gDark">深</button></div>
 <div class="gr" id="skinRow"><span style="font-size:9px;color:var(--text-secondary)">🐍</span><button class="grb on" id="skGrad">渐变</button><button class="grb" id="skSolid">纯色</button><button class="grb" id="skStripe">条纹</button><button class="grb" id="skRainbow">彩虹</button><button class="grb" id="skNeon">霓虹</button></div>
-<div class="overlay" id="about"><h2 style="font-size:18px;margin-bottom:2px">📖 关于 Eaye蛇</h2><p style="font-size:9px;margin-bottom:4px" id="verLabel">v3.40 · 全功能贪吃蛇</p><div id="abtContent" style="width:100%;max-width:340px;overflow-y:auto;flex:1;padding:0 4px;font-size:10px;line-height:1.6;color:var(--text-primary)"></div><button class="small" id="abtClose" style="margin-top:4px">关闭</button></div>
+<div class="overlay" id="about"><h2 style="font-size:18px;margin-bottom:2px">📖 关于 Eaye蛇</h2><p style="font-size:9px;margin-bottom:4px" id="verLabel">v3.42 · 全功能贪吃蛇</p><div id="abtContent" style="width:100%;max-width:340px;overflow-y:auto;flex:1;padding:0 4px;font-size:10px;line-height:1.6;color:var(--text-primary)"></div><button class="small" id="abtClose" style="margin-top:4px">关闭</button></div>
 <div class="overlay" id="cdOver"><h2 id="cdNum" style="font-size:72px;font-weight:900;color:var(--accent);text-shadow:0 4px 20px rgba(0,0,0,.12)">3</h2></div>
 <div class="overlay on" id="m"><h2 style="font-size:26px;margin-bottom:0;display:flex;align-items:center;gap:6px;font-family:'Lobster','Georgia',serif;font-weight:400;letter-spacing:1px"><svg viewBox="0 0 130 40" style="height:38px;width:auto"><defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a73e8"/><stop offset="100%" stop-color="#7c4dff"/></linearGradient></defs><rect x="2" y="4" width="32" height="32" rx="8" fill="url(#lg2)"/><path d="M8 28l6-12 4 6 4-10 6 8" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="28" cy="20" r="3.2" fill="#fff"/><text x="40" y="28" font-family="'Lobster',cursive" font-size="24" font-weight="700" fill="url(#lg2)">Eaye蛇</text></svg></h2><div class="mg" id="modeGrid"></div><div class="pp"><span>👥</span><button class="ppb on" id="p1B">1P</button><button class="ppb" id="p2B">2P</button></div><div class="dr"><span>⚡</span><button class="drb" id="chillB">休闲</button><button class="drb" id="easyB">简单</button><button class="drb on" id="normB">普通</button><button class="drb" id="hardB">困难</button><button class="drb" id="challB">挑战</button><button class="drb" id="extremeB">极限</button></div><div class="mf"><span>↑↓←→ / WASD</span><span>空格 暂停</span><span>ESC 菜单</span><button class="abt" id="abtBtn">📖 关于</button></div></div>
 <div class="overlay" id="p"><h2>⏸ 已暂停</h2><p id="pStats" style="margin-bottom:6px;font-size:10px">蛇长: 3节 · 已吃: 0个</p><button class="big" id="resB">▶ 继续</button><button class="btn ac" id="rpB" style="margin-top:6px;padding:8px 24px">🔄 重新开始</button><button class="small" id="pmB" style="margin-top:4px">返回菜单</button></div>
@@ -322,7 +322,7 @@ document.addEventListener('keydown',function(e){
     else if(S.p==='play')tp();
     return;
   }
-  if(S.p!=='play'||S.pa||(!S.is2P&&S.mode==='ai'))return;
+  if(S.p!=='play'||S.pa)return;
   var m1={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right'};
   var m2={w:'up',W:'up',s:'down',S:'down',a:'left',A:'left',d:'right',D:'right'};
   if(m1[k]&&S.sn[0])S.sn[0].n=m1[k];
@@ -331,7 +331,7 @@ document.addEventListener('keydown',function(e){
 // ===== 触屏 =====
 var tx=0,ty=0;
 C.addEventListener('touchstart',function(e){var t=e.touches[0];tx=t.clientX;ty=t.clientY;initAudio();},{passive:true});
-C.addEventListener('touchend',function(e){if(S.p!=='play'||S.pa||(!S.is2P&&S.mode==='ai'))return;var t=e.changedTouches[0],dx=t.clientX-tx,dy=t.clientY-ty;if(Math.abs(dx)<15&&Math.abs(dy)<15)return;S.sn[0].n=Math.abs(dx)>Math.abs(dy)?(dx>0?'right':'left'):(dy>0?'down':'up');});
+C.addEventListener('touchend',function(e){if(S.p!=='play'||S.pa)return;var t=e.changedTouches[0],dx=t.clientX-tx,dy=t.clientY-ty;if(Math.abs(dx)<15&&Math.abs(dy)<15)return;S.sn[0].n=Math.abs(dx)>Math.abs(dy)?(dx>0?'right':'left'):(dy>0?'down':'up');});
 // ===== 按钮 =====
 function modeReStart(){S.lvl=S.lvl||1;init();playSnd('click');start();}
 goR.onclick=modeReStart;rB.onclick=modeReStart;rpB.onclick=modeReStart;
