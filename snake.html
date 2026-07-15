@@ -44,12 +44,12 @@ canvas{display:block;background:var(--canvas-bg);border-radius:8px;width:auto;he
 <div class="theme-row" id="tR"></div>
 <div class="gr" id="gridCtrl"><span style="font-size:9px;color:var(--text-secondary)">📏</span><button class="grb" id="gOff">关</button><button class="grb" id="gLight">淡</button><button class="grb on" id="gMid">中</button><button class="grb" id="gDark">深</button></div>
 <div class="gr" id="skinRow"><span style="font-size:9px;color:var(--text-secondary)">🐍</span><button class="grb on" id="skGrad">渐变</button><button class="grb" id="skSolid">纯色</button><button class="grb" id="skStripe">条纹</button><button class="grb" id="skRainbow">彩虹</button><button class="grb" id="skNeon">霓虹</button></div>
-<div class="overlay" id="about"><h2 style="font-size:18px;margin-bottom:2px">📖 关于 Eaye蛇</h2><p style="font-size:9px;margin-bottom:4px" id="verLabel">v3.52 · 全功能贪吃蛇</p><div id="abtContent" style="width:100%;max-width:340px;overflow-y:auto;flex:1;padding:0 4px;font-size:10px;line-height:1.6;color:var(--text-primary)"></div><button class="small" id="abtClose" style="margin-top:4px">关闭</button></div>
+<div class="overlay" id="about"><h2 style="font-size:18px;margin-bottom:2px">📖 关于 Eaye蛇</h2><p style="font-size:9px;margin-bottom:4px" id="verLabel">v3.58 · 全功能贪吃蛇</p><div id="abtContent" style="width:100%;max-width:340px;overflow-y:auto;flex:1;padding:0 4px;font-size:10px;line-height:1.6;color:var(--text-primary)"></div><button class="small" id="abtClose" style="margin-top:4px">关闭</button></div>
 <div class="overlay" id="achieve"><h2 style="font-size:18px;margin-bottom:2px">🏅 成就</h2><p style="font-size:9px;margin-bottom:4px">12个成就等待解锁</p><div id="achContent" style="width:100%;max-width:340px;overflow-y:auto;flex:1;padding:0 4px;font-size:10px;line-height:1.6;color:var(--text-primary)"></div><button class="small" id="achClose" style="margin-top:4px">关闭</button></div>
 <div class="overlay" id="cdOver"><h2 id="cdNum" style="font-size:72px;font-weight:900;color:var(--accent);text-shadow:0 4px 20px rgba(0,0,0,.12)">3</h2></div>
 <div class="overlay on" id="m"><h2 style="font-size:26px;margin-bottom:0;display:flex;align-items:center;gap:6px;font-family:'Lobster','Georgia',serif;font-weight:400;letter-spacing:1px"><svg viewBox="0 0 130 40" style="height:38px;width:auto"><defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a73e8"/><stop offset="100%" stop-color="#7c4dff"/></linearGradient></defs><rect x="2" y="4" width="32" height="32" rx="8" fill="url(#lg2)"/><path d="M8 28l6-12 4 6 4-10 6 8" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="28" cy="20" r="3.2" fill="#fff"/><text x="40" y="28" font-family="'Lobster',cursive" font-size="24" font-weight="700" fill="url(#lg2)">Eaye蛇</text></svg></h2><div class="mg" id="modeGrid"></div><div class="pp"><span>👥</span><button class="ppb on" id="p1B">1P</button><button class="ppb" id="p2B">2P</button></div><div class="dr"><span>⚡</span><button class="drb" id="chillB">休闲</button><button class="drb" id="easyB">简单</button><button class="drb on" id="normB">普通</button><button class="drb" id="hardB">困难</button><button class="drb" id="challB">挑战</button><button class="drb" id="extremeB">极限</button></div><div class="mf"><span>↑↓←→ / WASD</span><span>空格 暂停</span><span>ESC 菜单</span><button class="abt" id="abtBtn">📖 关于</button><button class="abt" id="achBtn">🏅 成就</button></div></div>
 <div class="overlay" id="p"><h2>⏸ 已暂停</h2><p id="pStats" style="margin-bottom:6px;font-size:10px">蛇长: 3节 · 已吃: 0个</p><button class="big" id="resB">▶ 继续</button><button class="btn ac" id="rpB" style="margin-top:6px;padding:8px 24px">🔄 重新开始</button><button class="small" id="pmB" style="margin-top:4px">返回菜单</button></div>
-<div class="overlay" id="go"><h2 id="goH">💀 游戏结束</h2><p id="goP">得分: <b id="goS">0</b></p><button class="big" id="goR">再来一局</button><button class="small" id="goM">返回菜单</button></div>
+<div class="overlay" id="go"><h2 id="goH">💀 游戏结束</h2><p id="goP">得分: <b id="goS">0</b></p><button class="big" id="goR">再来一局</button><button class="small" id="goM">返回菜单</button><button class="small" id="shareBtn" style="margin-top:2px">📸 分享截图</button></div>
 </div>
 <script>
 var C=document.getElementById('C'),ctx=C.getContext('2d');
@@ -322,7 +322,7 @@ function draw(){var t=THEMES[curT],animT=1;if(S.p==='play'&&!S.pa&&S.t){var elap
   S.popups.forEach(function(p){ctx.globalAlpha=Math.min(1,p.life/20);ctx.fillStyle='#ffd700';ctx.font='bold 14px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(p.text,p.x,p.y);ctx.globalAlpha=1;});
   S.particles.forEach(function(p){ctx.globalAlpha=p.life/40;ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;});
   var sn=S.sn[0];if(sn)for(var i=0;i<sn.b.length;i++){var se=sn.b[i],sx=se.x*CL,sy=se.y*CL,ih=i===0;var sk=snakeSkin;if(animT<1&&S.prevSn&&S.prevSn[0]&&S.prevSn[0].b[i]){var ps=S.prevSn[0].b[i];sx=(ps.x+(se.x-ps.x)*animT)*CL;sy=(ps.y+(se.y-ps.y)*animT)*CL;}if(sk==='rainbow'||(sk==='gradient'&&t.id==='rainbow')){var hue=(i/sn.b.length*300+Date.now()/50)%360;ctx.fillStyle='hsl('+hue+',80%,55%)';}else if(sk==='solid'){ctx.fillStyle=t.accent;}else if(sk==='stripe'){ctx.fillStyle=i%2===0?t.accent:t.accentDark;}else if(sk==='neon'){var hue2=(i*40+Date.now()/30)%360;ctx.fillStyle='hsl('+hue2+',100%,60%)';}else{var p=i/Math.max(sn.b.length-1,1),r=Math.round(t.sr1-p*(t.sr1-t.sr2)),g=Math.round(t.sg1-p*(t.sg1-t.sg2)),b=Math.round(t.sb1-p*(t.sb1-t.sb2));ctx.fillStyle='rgb('+r+','+g+','+b+')';}ctx.beginPath();ctx.roundRect(sx+1,sy+1,CL-2,CL-2,ih?4:2);ctx.fill();if(ih){var cx=sx+CL/2,cy=sy+CL/2,eo=4,er=2.5;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx-eo,cy-eo,er,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(cx+eo,cy-eo,er,0,Math.PI*2);ctx.fill();ctx.fillStyle='#111';ctx.beginPath();ctx.arc(cx+eo+1,cy-eo,1.1,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(cx-eo+1,cy-eo,1.1,0,Math.PI*2);ctx.fill();}}
-  if(S.is2P&&S.sn2&&S.sn2[0]){var sn2=S.sn2[0];for(var i=0;i<sn2.b.length;i++){var se=sn2.b[i],sx=se.x*CL,sy=se.y*CL,ih=i===0;var p=i/Math.max(sn2.b.length-1,1);ctx.fillStyle='rgb('+Math.round(220-p*50)+','+Math.round(50-p*20)+','+Math.round(60-p*20)+')';ctx.beginPath();ctx.roundRect(sx+1,sy+1,CL-2,CL-2,ih?4:2);ctx.fill();if(ih){ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(sx+CL/2-4,sy+CL/2-4,2.5,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(sx+CL/2+4,sy+CL/2-4,2.5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#800';ctx.beginPath();ctx.arc(sx+CL/2+5,sy+CL/2-4,1.1,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(sx+CL/2-3,sy+CL/2-4,1.1,0,Math.PI*2);ctx.fill();}}}
+  if(S.is2P&&S.sn2&&S.sn2[0]){var sn2=S.sn2[0];for(var i=0;i<sn2.b.length;i++){var se=sn2.b[i],sx=se.x*CL,sy=se.y*CL,ih=i===0;if(animT<1&&S.prevSn2&&S.prevSn2[0]&&S.prevSn2[0].b[i]){var ps=S.prevSn2[0].b[i];sx=(ps.x+(se.x-ps.x)*animT)*CL;sy=(ps.y+(se.y-ps.y)*animT)*CL;}var p=i/Math.max(sn2.b.length-1,1);ctx.fillStyle='rgb('+Math.round(220-p*50)+','+Math.round(50-p*20)+','+Math.round(60-p*20)+')';ctx.beginPath();ctx.roundRect(sx+1,sy+1,CL-2,CL-2,ih?4:2);ctx.fill();if(ih){ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(sx+CL/2-4,sy+CL/2-4,2.5,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(sx+CL/2+4,sy+CL/2-4,2.5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#800';ctx.beginPath();ctx.arc(sx+CL/2+5,sy+CL/2-4,1.1,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(sx+CL/2-3,sy+CL/2-4,1.1,0,Math.PI*2);ctx.fill();}}}
   if(!S.is2P&&S.aiSn&&S.aiSn[0]){var as=S.aiSn[0];for(var i=0;i<as.b.length;i++){var se=as.b[i],sx=se.x*CL,sy=se.y*CL,ih=i===0;var p=i/Math.max(as.b.length-1,1);ctx.fillStyle='rgb('+Math.round(255-p*100)+','+Math.round(100-p*30)+','+Math.round(100-p*30)+')';ctx.beginPath();ctx.roundRect(sx+1,sy+1,CL-2,CL-2,ih?4:2);ctx.fill();if(ih){ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(sx+CL/2-4,sy+CL/2-4,2.5,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(sx+CL/2+4,sy+CL/2-4,2.5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#800';ctx.beginPath();ctx.arc(sx+CL/2+5,sy+CL/2-4,1.1,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(sx+CL/2-3,sy+CL/2-4,1.1,0,Math.PI*2);ctx.fill();}}}
   if(S.items){S.items.forEach(function(it){var itd;for(var k=0;k<ITEM_TYPES.length;k++)if(ITEM_TYPES[k].id===it.type)itd=ITEM_TYPES[k];if(itd){ctx.globalAlpha=.8;ctx.font='13px serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(itd.emoji,it.x*CL+CL/2,it.y*CL+CL/2+1);ctx.globalAlpha=1;}});}
   if(S.shield>0){ctx.strokeStyle='rgba(100,200,255,.6)';ctx.lineWidth=3;ctx.setLineDash([4,4]);ctx.strokeRect(2,2,C.width-4,C.height-4);ctx.setLineDash([]);}
@@ -373,6 +373,41 @@ pB.onclick=function(){if(S.p==='play')tp();};
 pmB.onclick=function(){bk();showModes();};
 mBackB.onclick=function(){bk();showModes();};
 goM.onclick=function(){bk();showModes();};
+var shareBtn=document.getElementById('shareBtn');
+shareBtn.onclick=function(){
+  var sc=document.createElement('canvas');sc.width=C.width*1.2;sc.height=C.height+160;
+  var sx=sc.getContext('2d'),w=sc.width,h=sc.height;
+  var t=THEMES[curT];
+  // theme-aware bg gradient
+  var c1=t.sr1+','+t.sg1+','+t.sb1,c2=Math.round(t.sr1*.2)+','+Math.round(t.sg1*.2)+','+Math.round(t.sb1*.2);
+  var g=sx.createLinearGradient(0,0,0,h);g.addColorStop(0,'rgb('+c1+')');g.addColorStop(1,'rgb('+c2+')');
+  sx.fillStyle=g;sx.fillRect(0,0,w,h);
+  // qr code in top right
+  var qr=new Image();qr.crossOrigin='anonymous';
+  qr.onload=function(){
+    var qs=70,pad=8;
+    sx.fillStyle=t.accent;sx.beginPath();sx.roundRect(w-qs-pad-4,pad-4,qs+8,qs+8,6);sx.fill();
+    sx.drawImage(qr,w-qs-pad,pad,qs,qs);
+    // game screenshot
+    sx.drawImage(C,(w-C.width)/2,100);
+    // draw snake logo (current theme accent)
+    var lx=w/2-60,ly=35;
+    sx.fillStyle=t.accent;sx.beginPath();sx.roundRect(lx,ly,40,40,8);sx.fill();
+    sx.strokeStyle='#fff';sx.lineWidth=3;sx.lineCap='round';sx.lineJoin='round';
+    sx.beginPath();sx.moveTo(lx+8,ly+28);sx.lineTo(lx+16,ly+10);sx.lineTo(lx+24,ly+20);sx.lineTo(lx+30,ly+6);sx.lineTo(lx+36,ly+24);sx.stroke();
+    sx.fillStyle='#fff';sx.beginPath();sx.arc(lx+36,ly+24,3.5,0,Math.PI*2);sx.fill();
+    // Eaye蛇 title
+    sx.fillStyle='#fff';sx.font='bold 28px "Lobster","Georgia",serif';sx.textAlign='center';sx.textBaseline='middle';
+    sx.fillText('Eaye蛇',w/2+20,55);
+    // score info
+    var txt=document.getElementById('goP').innerText.replace(/<[^>]*>/g,'');
+    sx.fillStyle='rgba(255,255,255,.85)';sx.font='14px sans-serif';sx.textBaseline='middle';
+    var lines=txt.split('·');lines.forEach(function(l,i){sx.fillText(l.trim(),w/2,h-55+i*20);});
+    var a=document.createElement('a');a.download='Eaye蛇_分享.png';a.href=sc.toDataURL();a.click();
+  };
+  qr.src='https://quickchart.io/qr?text=https://vxxy77.github.io/eaye-snake/&size=150&margin=1';
+  playSnd('click');
+};
 p1B.onclick=function(){is2P=false;updatePP();playSnd('click');};
 p2B.onclick=function(){is2P=true;updatePP();playSnd('click');};
 function updateDiff(){chillB.classList.toggle('on',diff==='chill');easyB.classList.toggle('on',diff==='easy');normB.classList.toggle('on',diff==='normal');hardB.classList.toggle('on',diff==='hard');challB.classList.toggle('on',diff==='chall');extremeB.classList.toggle('on',diff==='extreme');}
