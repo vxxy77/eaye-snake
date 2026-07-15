@@ -43,7 +43,7 @@ canvas{display:block;background:var(--canvas-bg);border-radius:8px;width:auto;he
 <div class="btns"><button class="btn" id="pB">⏸ 暂停</button><button class="btn ac" id="rB">🔄 重新开始</button><button class="btn" id="mBackB">返回菜单</button></div>
 <div class="theme-row" id="tR"></div>
 <div class="gr" id="gridCtrl"><span style="font-size:9px;color:var(--text-secondary)">📏</span><button class="grb" id="gOff">关</button><button class="grb" id="gLight">淡</button><button class="grb on" id="gMid">中</button><button class="grb" id="gDark">深</button></div>
-<div class="overlay" id="about"><h2 style="font-size:18px;margin-bottom:2px">📖 关于 Eaye蛇</h2><p style="font-size:9px;margin-bottom:4px" id="verLabel">v3.37 · 全功能贪吃蛇</p><div id="abtContent" style="width:100%;max-width:340px;overflow-y:auto;flex:1;padding:0 4px;font-size:10px;line-height:1.6;color:var(--text-primary)"></div><button class="small" id="abtClose" style="margin-top:4px">关闭</button></div>
+<div class="overlay" id="about"><h2 style="font-size:18px;margin-bottom:2px">📖 关于 Eaye蛇</h2><p style="font-size:9px;margin-bottom:4px" id="verLabel">v3.38 · 全功能贪吃蛇</p><div id="abtContent" style="width:100%;max-width:340px;overflow-y:auto;flex:1;padding:0 4px;font-size:10px;line-height:1.6;color:var(--text-primary)"></div><button class="small" id="abtClose" style="margin-top:4px">关闭</button></div>
 <div class="overlay" id="cdOver"><h2 id="cdNum" style="font-size:72px;font-weight:900;color:var(--accent);text-shadow:0 4px 20px rgba(0,0,0,.12)">3</h2></div>
 <div class="overlay on" id="m"><h2 style="font-size:26px;margin-bottom:0;display:flex;align-items:center;gap:6px;font-family:'Lobster','Georgia',serif;font-weight:400;letter-spacing:1px"><svg viewBox="0 0 130 40" style="height:38px;width:auto"><defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a73e8"/><stop offset="100%" stop-color="#7c4dff"/></linearGradient></defs><rect x="2" y="4" width="32" height="32" rx="8" fill="url(#lg2)"/><path d="M8 28l6-12 4 6 4-10 6 8" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="28" cy="20" r="3.2" fill="#fff"/><text x="40" y="28" font-family="'Lobster',cursive" font-size="24" font-weight="700" fill="url(#lg2)">Eaye蛇</text></svg></h2><div class="mg" id="modeGrid"></div><div class="pp"><span>👥</span><button class="ppb on" id="p1B">1P</button><button class="ppb" id="p2B">2P</button></div><div class="dr"><span>⚡</span><button class="drb" id="chillB">休闲</button><button class="drb" id="easyB">简单</button><button class="drb on" id="normB">普通</button><button class="drb" id="hardB">困难</button><button class="drb" id="challB">挑战</button><button class="drb" id="extremeB">极限</button></div><div class="mf"><span>↑↓←→ / WASD</span><span>空格 暂停</span><span>ESC 菜单</span><button class="abt" id="abtBtn">📖 关于</button></div></div>
 <div class="overlay" id="p"><h2>⏸ 已暂停</h2><p id="pStats" style="margin-bottom:6px;font-size:10px">蛇长: 3节 · 已吃: 0个</p><button class="big" id="resB">▶ 继续</button><button class="btn ac" id="rpB" style="margin-top:6px;padding:8px 24px">🔄 重新开始</button><button class="small" id="pmB" style="margin-top:4px">返回菜单</button></div>
@@ -229,6 +229,7 @@ function end(){
   S.p='end';if(S.t){clearInterval(S.t);S.t=null;}
   addStat('games',1);addStat('score',S.sc);
   var timeS=Math.floor(S.runTime*S.spd/1000);if(timeS>ls('st_maxtime',0))lss('st_maxtime',timeS);
+  var endDetails='蛇长<b>'+S.sn[0].b.length+'</b>节 · 存活<b>'+timeS+'</b>秒 · 吃<b>'+S.foodEaten+'</b>个';
   if(S.sn[0]&&S.sn[0].b.length>ls('st_longest',0))lss('st_longest',S.sn[0].b.length);
   if(S.mode==='daily'){var key='eaye_daily_'+S.dailySeed;try{var prev=parseInt(localStorage.getItem(key))||0;if(S.sc>prev){localStorage.setItem(key,String(S.sc));S.dailyBest=S.sc;}}catch(e){}}
   var hs=setHS(S.mode,S.sc),hsTxt=hs?' 🏆 新纪录！':' 最高 '+getHS(S.mode);
@@ -240,7 +241,7 @@ function end(){
   else if(S.mode==='ai')info='AI得分: <b>'+S.aiSc+'</b>';
   else if(S.mode==='timed'||S.mode==='daily')info='时间到！得分: <b>'+S.sc+'</b>'+hsTxt;
   if(S.mode==='daily'&&S.dailyBest>0)info+=' · 今日最高: <b>'+S.dailyBest+'</b>';
-  goH.textContent=title;goP.innerHTML=info;
+  goH.textContent=title;goP.innerHTML=info+'<br><span style="font-size:9px;color:var(--text-secondary)">'+endDetails+'</span>';
   playSnd('die');goEl.classList.add('on');draw();
 }
 function tp(){
@@ -294,6 +295,8 @@ function draw(){var t=THEMES[curT];ctx.clearRect(0,0,C.width,C.height);
   if(S.mode==='endless'){ctx.fillStyle='rgba(0,0,0,.15)';ctx.font='10px sans-serif';ctx.textAlign='right';ctx.textBaseline='bottom';ctx.fillText('♾ 无尽模式',C.width-3,C.height-3);}
   if(S.is2P){ctx.fillStyle='rgba(220,50,60,.85)';ctx.font='bold 11px sans-serif';ctx.textAlign='right';ctx.textBaseline='top';ctx.fillText('🔴 P2: '+S.sc2,C.width-4,4);}
 }
+// ===== 切标签页自动暂停 =====
+document.addEventListener('visibilitychange',function(){if(document.hidden&&S.p==='play'&&!S.pa)tp();});
 // ===== 键盘 =====
 document.addEventListener('keydown',function(e){
   var k=e.key;
@@ -302,6 +305,10 @@ document.addEventListener('keydown',function(e){
     if(S.p==='play'){if(!S.pa)tp();else{S.pa=false;var md=getMod();S.t=setInterval(tk,S.spd);pB.textContent='⏸ 暂停';pEl.classList.remove('on');}}
     else if(S.p==='menu'){}else{bk();}
     return;
+  }
+  if(k==='?'||k==='/'){
+    var st=ls('st_games',0),sf=ls('st_food',0),sl=ls('st_longest',0);
+    alert('⌨️ 快捷键\n\n↑↓←→  P1方向\nWASD   P2方向(双人)\n空格  开始/暂停\nESC   返回菜单\n?     显示此帮助\n\n🎮 难度倍率\n休闲×0.5 简单×0.7 普通×1\n困难×1.5 挑战×2 极限×3\n\n👥 双人模式\n菜单底部切换2P\n\n📊 生涯\n累计'+st+'局 · 最长蛇'+sl+'节');return;
   }
   if(k===' '){
     if(S.p==='menu'){init();playSnd('click');start();}
