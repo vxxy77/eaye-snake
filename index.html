@@ -44,7 +44,7 @@ canvas{display:block;background:var(--canvas-bg);border-radius:8px;width:auto;he
 <div class="theme-row" id="tR"></div>
 <div class="gr" id="gridCtrl"><span style="font-size:9px;color:var(--text-secondary)">📏</span><button class="grb" id="gOff">关</button><button class="grb" id="gLight">淡</button><button class="grb on" id="gMid">中</button><button class="grb" id="gDark">深</button></div>
 <div class="gr" id="skinRow"><span style="font-size:9px;color:var(--text-secondary)">🐍</span><button class="grb on" id="skGrad">渐变</button><button class="grb" id="skSolid">纯色</button><button class="grb" id="skStripe">条纹</button><button class="grb" id="skRainbow">彩虹</button><button class="grb" id="skNeon">霓虹</button></div>
-<div class="overlay" id="about"><h2 style="font-size:18px;margin-bottom:2px">📖 关于 Eaye蛇</h2><p style="font-size:9px;margin-bottom:4px" id="verLabel">v3.43 · 全功能贪吃蛇</p><div id="abtContent" style="width:100%;max-width:340px;overflow-y:auto;flex:1;padding:0 4px;font-size:10px;line-height:1.6;color:var(--text-primary)"></div><button class="small" id="abtClose" style="margin-top:4px">关闭</button></div>
+<div class="overlay" id="about"><h2 style="font-size:18px;margin-bottom:2px">📖 关于 Eaye蛇</h2><p style="font-size:9px;margin-bottom:4px" id="verLabel">v3.51 · 全功能贪吃蛇</p><div id="abtContent" style="width:100%;max-width:340px;overflow-y:auto;flex:1;padding:0 4px;font-size:10px;line-height:1.6;color:var(--text-primary)"></div><button class="small" id="abtClose" style="margin-top:4px">关闭</button></div>
 <div class="overlay" id="cdOver"><h2 id="cdNum" style="font-size:72px;font-weight:900;color:var(--accent);text-shadow:0 4px 20px rgba(0,0,0,.12)">3</h2></div>
 <div class="overlay on" id="m"><h2 style="font-size:26px;margin-bottom:0;display:flex;align-items:center;gap:6px;font-family:'Lobster','Georgia',serif;font-weight:400;letter-spacing:1px"><svg viewBox="0 0 130 40" style="height:38px;width:auto"><defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a73e8"/><stop offset="100%" stop-color="#7c4dff"/></linearGradient></defs><rect x="2" y="4" width="32" height="32" rx="8" fill="url(#lg2)"/><path d="M8 28l6-12 4 6 4-10 6 8" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="28" cy="20" r="3.2" fill="#fff"/><text x="40" y="28" font-family="'Lobster',cursive" font-size="24" font-weight="700" fill="url(#lg2)">Eaye蛇</text></svg></h2><div class="mg" id="modeGrid"></div><div class="pp"><span>👥</span><button class="ppb on" id="p1B">1P</button><button class="ppb" id="p2B">2P</button></div><div class="dr"><span>⚡</span><button class="drb" id="chillB">休闲</button><button class="drb" id="easyB">简单</button><button class="drb on" id="normB">普通</button><button class="drb" id="hardB">困难</button><button class="drb" id="challB">挑战</button><button class="drb" id="extremeB">极限</button></div><div class="mf"><span>↑↓←→ / WASD</span><span>空格 暂停</span><span>ESC 菜单</span><button class="abt" id="abtBtn">📖 关于</button></div></div>
 <div class="overlay" id="p"><h2>⏸ 已暂停</h2><p id="pStats" style="margin-bottom:6px;font-size:10px">蛇长: 3节 · 已吃: 0个</p><button class="big" id="resB">▶ 继续</button><button class="btn ac" id="rpB" style="margin-top:6px;padding:8px 24px">🔄 重新开始</button><button class="small" id="pmB" style="margin-top:4px">返回菜单</button></div>
@@ -63,10 +63,10 @@ var p1B=document.getElementById('p1B'),p2B=document.getElementById('p2B');
 var cdOver=document.getElementById('cdOver'),cdNum=document.getElementById('cdNum');
 var muteBtn=document.getElementById('muteBtn'),pStats=document.getElementById('pStats');
 var chillB=document.getElementById('chillB'),easyB=document.getElementById('easyB'),normB=document.getElementById('normB'),hardB=document.getElementById('hardB'),challB=document.getElementById('challB'),extremeB=document.getElementById('extremeB');
-var muted=false,diff='normal',gridOp=.08,snakeSkin='gradient';
+var muted=false,diff=ls('diff','normal'),gridOp=ls('gridOp',.08),snakeSkin=ls('skin','gradient');
 var DIFF={chill:{spd:200,mult:.5},easy:{spd:170,mult:.7},normal:{spd:140,mult:1},hard:{spd:110,mult:1.5},chall:{spd:85,mult:2},extreme:{spd:60,mult:3}};
 var SZ=40,CL=C.width/SZ,my=Math.floor(SZ/2);
-var S={p:'menu',t:null,sn:[],sn2:[],fd:[],sc:0,sc2:0,pa:false,mult:1,multTimer:0,spd:140,mode:'classic',lvl:1,tLeft:0,walls:[],items:[],aiSn:null,aiSc:0,aiDir:null,shield:0,itemTmr:0,dailySeed:'',dailyBest:0,is2P:false,foodEaten:0,popups:[],particles:[],foodAni:0,runTime:0,combo:0,comboTimer:0,foodTimer:0};
+var S={p:'menu',t:null,sn:[],sn2:[],fd:[],sc:0,sc2:0,pa:false,mult:1,multTimer:0,spd:140,mode:'classic',lvl:1,tLeft:0,walls:[],items:[],aiSn:null,aiSc:0,aiDir:null,shield:0,itemTmr:0,dailySeed:'',dailyBest:0,is2P:false,foodEaten:0,popups:[],particles:[],foodAni:0,runTime:0,combo:0,comboTimer:0,foodTimer:0,bossLvl:3};
 var is2P=false;
 // ===== Web Audio 音效 =====
 var actx=null;
@@ -98,7 +98,7 @@ function pickFoodType(){var t=0;FOOD_TYPES.forEach(function(f){t+=f.wt;});var r=
 // ===== 8 种游戏模式 =====
 var MODES=[
 {id:'levels',icon:'🏆',label:'闯关',desc:'8关挑战',spd:140,desc2:function(){return '第'+S.lvl+'关 · 目标'+[30,50,80,120,170,230,300,400][S.lvl-1]+'分';}},
-{id:'ai',icon:'🤖',label:'AI',desc:'双蛇对战AI',spd:130,desc2:function(){return 'AI:'+S.aiSc+'分';}},
+{id:'ai',icon:'👹',label:'BOSS',desc:'挑战BOSS',spd:130,desc2:function(){return 'BOSS:'+S.aiSc+'分'+(S.tLeft>0?' · '+Math.ceil(S.tLeft)+'s':'');}},
 {id:'maze',icon:'🧱',label:'迷宫',desc:'障碍物闯关',spd:140,desc2:function(){return '避开墙壁';}},
 {id:'vs',icon:'⚔️',label:'对战',desc:'人机/双人对战',spd:130,desc2:function(){return is2P?'P1:'+S.sc+' P2:'+S.sc2:'AI:'+S.aiSc+'分';}},
 {id:'timed',icon:'⏱',label:'限时',desc:'60秒冲刺',spd:130,desc2:function(){return '剩余'+(S.tLeft>0?S.tLeft+'s':'--');}},
@@ -137,7 +137,7 @@ function applyTheme(idx){
   R.setProperty('--btn-bg',t.btnBg);R.setProperty('--btn-text',t.btnText);R.setProperty('--btn-hover',t.btnHover);
   R.setProperty('--overlay-bg',t.overlayBg);R.setProperty('--overlay-text',t.overlayText);
   R.setProperty('--food-color',t.food);R.setProperty('--grid-color',t.grid);
-  curT=idx;document.querySelectorAll('.tc').forEach(function(e,i){e.classList.toggle('on',i===idx);});
+  curT=idx;document.querySelectorAll('.tc').forEach(function(e,i){e.classList.toggle('on',i===idx);});lss('theme',idx);
   if(S.p==='menu'||S.p==='end'||S.pa)draw();
 }
 function initThemes(){
@@ -151,7 +151,10 @@ function occ(extra){var o=new Set();S.sn.forEach(function(n){n.b.forEach(functio
 function fc(extra){var o=occ(extra),f=[];for(var x=0;x<SZ;x++)for(var y=0;y<SZ;y++)if(!o.has(x+','+y))f.push({x:x,y:y});return f;}
 function spawnFoodNear(){
   var free=fc(),h=S.sn[0].b[0];
-  var far=[];for(var i=0;i<free.length;i++){var d=Math.abs(free[i].x-h.x)+Math.abs(free[i].y-h.y);if(d>=5)far.push(free[i]);}
+  // filter out walls
+  if(S.walls&&S.walls.length>0){var wallSet={};S.walls.forEach(function(w){wallSet[w.x+','+w.y]=true;});free=free.filter(function(p){return !wallSet[p.x+','+p.y];});}
+  var far=[];
+  for(var i=0;i<free.length;i++){var d=Math.abs(free[i].x-h.x)+Math.abs(free[i].y-h.y);if(d>=5)far.push(free[i]);}
   var pool=far.length>0?far:free;
   if(pool.length>0){var p=pool[rnd(0,pool.length-1)];S.fd.push({x:p.x,y:p.y,type:pickFoodType()});}
 }
@@ -159,14 +162,35 @@ function genMaze(){var w=[];S.walls=[];var p=[function(){for(var i=0;i<SZ;i++){w
 function initAI(){var d=['right','left','up','down'][rnd(0,3)];var x=rnd(10,30),y=rnd(10,30),b=[];if(d==='right'){for(var i=0;i<3;i++)b.push({x:x-i,y:y});}else if(d==='left'){for(var i=0;i<3;i++)b.push({x:x+i,y:y});}else if(d==='up'){for(var i=0;i<3;i++)b.push({x:x,y:y+i});}else{for(var i=0;i<3;i++)b.push({x:x,y:y-i});}S.aiSn=[{b:b,d:d,n:d}];S.aiSc=0;S.aiDir=d;}
 function moveAI(){if(!S.aiSn||!S.aiSn[0])return true;var sn=S.aiSn[0],op={up:'down',down:'up',left:'right',right:'left'};if(sn.n&&sn.n!==op[sn.d])sn.d=sn.n;var fx=-1,fy=-1,md=9999;S.fd.forEach(function(f){var d=Math.abs(f.x-sn.b[0].x)+Math.abs(f.y-sn.b[0].y);if(d<md){md=d;fx=f.x;fy=f.y;}});if(fx>=0){var dx=fx-sn.b[0].x,dy=fy-sn.b[0].y,best=sn.d,seen={};sn.b.forEach(function(b){seen[b.x+','+b.y]=true;});var tries=[];if(Math.abs(dx)>Math.abs(dy)){tries.push(dx>0?'right':'left');tries.push(dy>0?'down':'up');}else{tries.push(dy>0?'down':'up');tries.push(dx>0?'right':'left');}tries.push('right','left','up','down');for(var ti=0;ti<tries.length;ti++){var nd=tries[ti];if(nd===op[sn.d])continue;var nx=sn.b[0].x,ny=sn.b[0].y;if(nd==='up')ny--;else if(nd==='down')ny++;else if(nd==='left')nx--;else nx++;nx=((nx%SZ)+SZ)%SZ;ny=((ny%SZ)+SZ)%SZ;var hit=false;if(S.mode==='maze'||S.mode==='daily'){for(var wi=0;wi<S.walls.length;wi++){if(S.walls[wi].x===nx&&S.walls[wi].y===ny){hit=true;break;}}}if(!hit&&!seen[nx+','+ny]){best=nd;break;}}sn.d=best;}var nx=sn.b[0].x,ny=sn.b[0].y;if(sn.d==='up')ny--;else if(sn.d==='down')ny++;else if(sn.d==='left')nx--;else nx++;nx=((nx%SZ)+SZ)%SZ;ny=((ny%SZ)+SZ)%SZ;for(var i=0;i<sn.b.length;i++)if(sn.b[i].x===nx&&sn.b[i].y===ny)return false;if(S.mode==='maze'||S.mode==='daily'){for(var wi=0;wi<S.walls.length;wi++){if(S.walls[wi].x===nx&&S.walls[wi].y===ny)return false;}}sn.b.unshift({x:nx,y:ny});var ate=false;for(var i=S.fd.length-1;i>=0;i--){if(nx===S.fd[i].x&&ny===S.fd[i].y){var ft=getFood(S.fd[i].type);if(ft.id!=='clover')S.aiSc+=ft.pts;S.fd.splice(i,1);ate=true;break;}}if(!ate)sn.b.pop();return true;}
 var ITEM_TYPES=[{id:'shield',emoji:'🛡️',desc:'护盾',dur:0},{id:'speed',emoji:'⚡',desc:'加速',dur:100},{id:'slow',emoji:'🐢',desc:'减速',dur:100},{id:'bonus',emoji:'💎',desc:'加分',dur:0},];
-function spawnItem(){if(S.mode!=='items')return;var free=fc();if(free.length<5)return;var p=free[rnd(0,free.length-1)],types=['shield','shield','speed','slow','bonus','bonus'];S.items.push({x:p.x,y:p.y,type:types[rnd(0,types.length-1)],age:0});}
-function checkItems(){if(S.mode!=='items')return;S.itemTmr++;if(S.itemTmr>=8){S.itemTmr=0;spawnItem();}for(var i=S.items.length-1;i>=0;i--){S.items[i].age++;if(S.items[i].age>60){S.items.splice(i,1);continue;}var h=S.sn[0].b[0];if(S.items[i]&&S.items[i].x===h.x&&S.items[i].y===h.y){var it=S.items[i];S.items.splice(i,1);playSnd('item');if(it.type==='shield')S.shield=1;else if(it.type==='speed'){S.spd=Math.max(60,S.spd-30);if(S.t){clearInterval(S.t);S.t=setInterval(tk,S.spd);}}else if(it.type==='slow'){S.spd=Math.min(250,S.spd+30);if(S.t){clearInterval(S.t);S.t=setInterval(tk,S.spd);}}else if(it.type==='bonus'){S.sc+=Math.round(5*DIFF[diff].mult);sEl.textContent=S.sc;}}}}
+function spawnItem(){if(S.mode!=='items'&&S.mode!=='ai')return;var free=fc();if(free.length<5)return;var p=free[rnd(0,free.length-1)],types=['shield','shield','speed','slow','bonus','bonus'];S.items.push({x:p.x,y:p.y,type:types[rnd(0,types.length-1)],age:0});}
+function checkItems(){if(S.mode!=='items'&&S.mode!=='ai')return;S.itemTmr++;if(S.itemTmr>=8){S.itemTmr=0;spawnItem();}for(var i=S.items.length-1;i>=0;i--){S.items[i].age++;if(S.items[i].age>60){S.items.splice(i,1);continue;}var h=S.sn[0].b[0];if(S.items[i]&&S.items[i].x===h.x&&S.items[i].y===h.y){var it=S.items[i];S.items.splice(i,1);playSnd('item');if(it.type==='shield')S.shield=1;else if(it.type==='speed'){S.spd=Math.max(60,S.spd-30);if(S.t){clearInterval(S.t);S.t=setInterval(tk,S.spd);}}else if(it.type==='slow'){S.spd=Math.min(250,S.spd+30);if(S.t){clearInterval(S.t);S.t=setInterval(tk,S.spd);}}else if(it.type==='bonus'){S.sc+=Math.round(5*DIFF[diff].mult);sEl.textContent=S.sc;}}}}
 function getSeed(){var d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+// ===== 成就系统 =====
+var ACHIEVEMENTS=[
+{id:'first',name:'初来乍到',icon:'🎮',desc:'第一次玩游戏',check:function(){return ls('st_games',0)>=1;}},
+{id:'hundred',name:'大胃王',icon:'🍽️',desc:'累计吃100个食物',check:function(){return ls('st_food',0)>=100;}},
+{id:'longest',name:'贪得无厌',icon:'🐍',desc:'蛇身长到50节',check:function(){return ls('st_longest',0)>=50;}},
+{id:'champion',name:'通关达人',icon:'🏆',desc:'闯关模式打通8关',check:function(){return ls('ach_lv8',0)>=1;}},
+{id:'century',name:'百万富翁',icon:'💎',desc:'单局获得100分',check:function(){return ls('ach_100',0)>=1;}},
+{id:'duel',name:'双冠王',icon:'👑',desc:'双人模式获胜',check:function(){return ls('ach_2pwin',0)>=1;}},
+{id:'boss',name:'BOSS克星',icon:'👹',desc:'BOSS模式Lv5胜利',check:function(){return ls('ach_boss5',0)>=1;}},
+{id:'combo',name:'连击大师',icon:'🔥',desc:'达成5连击',check:function(){return ls('ach_combo5',0)>=1;}},
+{id:'extreme',name:'极速挑战',icon:'⚡',desc:'极限难度获胜',check:function(){return ls('ach_extreme',0)>=1;}},
+{id:'survivor',name:'生存专家',icon:'⏱️',desc:'存活超过120秒',check:function(){return ls('ach_survive',0)>=1;}},
+{id:'regular',name:'常客',icon:'🔄',desc:'累计玩100局',check:function(){return ls('st_games',0)>=100;}},
+{id:'collector',name:'收集者',icon:'📦',desc:'累计吃500个食物',check:function(){return ls('st_food',0)>=500;}},
+];
+function checkAchievements(){
+  ACHIEVEMENTS.forEach(function(a){
+    var unlocked=ls('ach_'+a.id,false);
+    if(!unlocked&&a.check()){lss('ach_'+a.id,true);S.popups.push({text:'🏅 解锁成就:'+a.name+' '+a.icon,x:C.width/2,y:C.height/2-60,life:90,vy:-.5});playSnd('level');}
+  });
+}
 // ===== 核心游戏逻辑 =====
 function init(){
   if(S.t){clearInterval(S.t);S.t=null;}
   var md=getMod();
-  S={p:'menu',t:null,sn:[],sn2:[],fd:[],sc:0,sc2:0,pa:false,mult:1,multTimer:0,spd:DIFF[diff].spd,mode:S.mode||'classic',lvl:S.lvl||1,tLeft:S.mode==='timed'?60:(S.mode==='daily'?60:0),walls:[],items:[],aiSn:null,aiSc:0,aiDir:null,shield:0,itemTmr:0,dailySeed:S.mode==='daily'?getSeed():'',dailyBest:S.dailyBest||0,is2P:is2P,foodEaten:0,popups:[],particles:[],foodAni:0,runTime:0,combo:0,comboTimer:0,foodTimer:0,prevSn:[],prevSn2:[],_lastMove:0};
+  S={p:'menu',t:null,sn:[],sn2:[],fd:[],sc:0,sc2:0,pa:false,mult:1,multTimer:0,spd:DIFF[diff].spd,mode:S.mode||'classic',lvl:S.lvl||1,tLeft:S.mode==='timed'?60:(S.mode==='daily'?60:(S.mode==='ai'?180:0)),walls:[],items:[],aiSn:null,aiSc:0,aiDir:null,shield:0,itemTmr:0,dailySeed:S.mode==='daily'?getSeed():'',dailyBest:S.dailyBest||0,is2P:is2P,foodEaten:0,popups:[],particles:[],foodAni:0,runTime:0,combo:0,comboTimer:0,foodTimer:0,prevSn:[],prevSn2:[],_lastMove:0,bossLvl:S.bossLvl||3};
   if(S.mode==='maze'||S.mode==='daily'){genMaze();for(var ci=-2;ci<=6;ci++)for(var cj=-2;cj<=2;cj++){var _cx=((4+ci)%SZ+SZ)%SZ,_cy=((my+cj)%SZ+SZ)%SZ;S.walls=S.walls.filter(function(w){return !(w.x===_cx&&w.y===_cy);});}if(S.is2P)for(var ci=-2;ci<=2;ci++)for(var cj=-2;cj<=2;cj++){var _cx=((35+ci)%SZ+SZ)%SZ,_cy=((my+5+cj)%SZ+SZ)%SZ;S.walls=S.walls.filter(function(w){return !(w.x===_cx&&w.y===_cy);});}}
   if(S.mode==='levels'){S.walls=[];var n=Math.min(S.lvl,8);for(var wi=0;wi<n*4;wi++){var f=fc(S.walls);if(f.length>0){var p=f[rnd(0,f.length-1)];S.walls.push(p);}}}
   if(S.mode==='ai'||(S.mode==='vs'&&!S.is2P))initAI();
@@ -198,9 +222,9 @@ function tk(){
   var r1=moveSnake(S.sn,false),r2=S.is2P?moveSnake(S.sn2,true):null;
   if(r2==='dead'&&r1==='dead'){end();return;}
   if(r1==='dead'||r2==='dead'){end();return;}
-  if(r1==='ate'){playSnd('eat');S.popups.push({text:'+'+S.sc,x:4*CL+CL/2,y:my*CL,life:30,vy:-1.5});S.foodAni=6;if(S.combo>1)S.popups.push({text:'🔥 '+S.combo+'x连击！',x:C.width/2,y:C.height/2-40,life:40,vy:-.8});}
+  if(r1==='ate'){playSnd('eat');S.popups.push({text:'+'+S.sc,x:4*CL+CL/2,y:my*CL,life:30,vy:-1.5});S.foodAni=6;if(S.combo>1)S.popups.push({text:'🔥 '+S.combo+'x连击！',x:C.width/2,y:C.height/2-40,life:40,vy:-.8});if(S.combo>=5)lss('ach_combo5',1);}
   S._lastMove=Date.now();
-  if(!S.is2P&&(S.mode==='ai'||S.mode==='vs')){if(moveAI()===false&&S.mode==='vs'){end();return;}}
+  if(!S.is2P&&(S.mode==='ai'||S.mode==='vs')){var aiInt=Math.max(1,5-S.bossLvl);S.aiTick=(S.aiTick||0)+1;if(S.aiTick>=aiInt){S.aiTick=0;var aiDead=moveAI()===false;if(aiDead&&S.mode==='ai'){end();return;}if(aiDead&&S.mode==='vs'){end();return;}}}
   checkItems();
   if(S.mode==='items'){var _md2=getMod();if(S.spd<_md2.spd){S.spd+=2;if(S.spd>_md2.spd)S.spd=_md2.spd;if(S.t){clearInterval(S.t);S.t=setInterval(tk,S.spd);}}}
   if(S.mode==='endless'&&S.foodEaten>0&&S.foodEaten%8===0&&S.spd>70){S.spd=Math.max(70,S.spd-5);if(S.t){clearInterval(S.t);S.t=setInterval(tk,S.spd);}}
@@ -244,11 +268,19 @@ function end(){
   if(S.mode==='levels'){if(S.lvl>=8&&S.sc>=400)title='🎉 恭喜通关！';else info='第'+S.lvl+'关 · 得分: <b>'+S.sc+'</b>'+hsTxt;}
   else if(S.is2P){info='🔵 P1: <b>'+S.sc+'</b> · 🔴 P2: <b>'+S.sc2+'</b>';title=S.sc>=S.sc2?'🔵 P1 胜利！':'🔴 P2 胜利！';if(S.sc===S.sc2)title='🤝 平局！';}
   else if(!S.is2P&&S.mode==='vs'){info='玩家: <b>'+S.sc+'</b> · AI: <b>'+S.aiSc+'</b>'+(S.sc>=S.aiSc?' 🏆 胜':' 💀 负')+hsTxt;}
-  else if(S.mode==='ai')info='AI得分: <b>'+S.aiSc+'</b>';
+  else if(S.mode==='ai'){var bossDead=!S.aiSn||!S.aiSn[0]||S.aiSn[0].b.length<3;var timeUp=S.tLeft<=0;if(timeUp)title='⏰ 时间到！';else if(bossDead)title='🎉 击败BOSS！';info='玩家: <b>'+S.sc+'</b> · BOSS: <b>'+S.aiSc+'</b>';if(timeUp)info+=S.sc>=S.aiSc?' 🏆 胜':' 💀 负';else if(bossDead)info+=' 🏆 胜';else info+=' 💀 负';}
   else if(S.mode==='timed'||S.mode==='daily')info='时间到！得分: <b>'+S.sc+'</b>'+hsTxt;
   if(S.mode==='daily'&&S.dailyBest>0)info+=' · 今日最高: <b>'+S.dailyBest+'</b>';
   goH.textContent=title;goP.innerHTML=info+'<br><span style="font-size:9px;color:var(--text-secondary)">'+endDetails+'</span>';
   playSnd('die');goEl.classList.add('on');draw();
+  // achievement triggers
+  if(S.mode==='levels'&&S.lvl>=8&&S.sc>=400)lss('ach_lv8',1);
+  if(S.sc>=100)lss('ach_100',1);
+  if(S.is2P&&S.sc>=S.sc2&&S.sc>0)lss('ach_2pwin',1);
+  if(S.mode==='ai'&&S.bossLvl>=5&&S.sc>=S.aiSc&&S.sc>0)lss('ach_boss5',1);
+  if(diff==='extreme'&&S.sc>0)lss('ach_extreme',1);
+  if(timeS>=120)lss('ach_survive',1);
+  checkAchievements();
 }
 function tp(){
   if(S.p!=='play')return;
@@ -264,7 +296,7 @@ function showModes(){
   mg.innerHTML='';
   var ICONS={
     levels:'<svg viewBox="0 0 24 24" style="width:22px;height:22px;vertical-align:middle"><path fill="var(--accent)" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
-    ai:'<svg viewBox="0 0 24 24" style="width:22px;height:22px;vertical-align:middle"><path fill="var(--accent)" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>',
+    ai:'<svg viewBox="0 0 24 24" style="width:22px;height:22px;vertical-align:middle"><path fill="var(--accent)" d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>',
     maze:'<svg viewBox="0 0 24 24" style="width:22px;height:22px;vertical-align:middle"><path fill="var(--accent)" d="M3 3h18v18H3V3zm2 2v14h14V5H5zm2 2h10v2H7V7zm0 4h4v2H7v-2zm6 0h4v2h-4v-2zm-6 4h10v2H7v-2z"/></svg>',
     vs:'<svg viewBox="0 0 24 24" style="width:22px;height:22px;vertical-align:middle"><path fill="var(--accent)" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>',
     timed:'<svg viewBox="0 0 24 24" style="width:22px;height:22px;vertical-align:middle"><path fill="var(--accent)" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>',
@@ -276,7 +308,7 @@ function showModes(){
     var hs=getHS(md.id);
     var b=document.createElement('button');b.className='mb';
     b.innerHTML='<div class="mi">'+(ICONS[md.id]||md.icon)+'</div><div class="mn">'+md.label+'</div><div class="md">'+md.desc+(hs?' · 最高<b>'+hs+'</b>':'')+'</div>';
-    b.onclick=function(){S.mode=md.id;S.lvl=1;if(md.id==='vs')is2P=true;init();playSnd('click');start();};
+    b.onclick=function(){var mid=md.id;if((mid==='vs'||mid==='items')&&!is2P){alert('⚔️ 对战模式和🎯道具赛仅限双人游玩\n请先切换为2P再进入');return;}if(mid==='ai'){var bd=prompt('👹 BOSS难度选择 (1~5)\n数字越大BOSS越强','3');if(bd===null)return;var bn=parseInt(bd);if(isNaN(bn)||bn<1||bn>5){alert('请输入1~5之间的数字');return;}S.bossLvl=bn;}S.mode=mid;S.lvl=1;if(mid==='vs'||mid==='items')is2P=true;init();playSnd('click');start();};
     mg.appendChild(b);
   });
   updatePP();
@@ -343,34 +375,34 @@ goM.onclick=function(){bk();showModes();};
 p1B.onclick=function(){is2P=false;updatePP();playSnd('click');};
 p2B.onclick=function(){is2P=true;updatePP();playSnd('click');};
 function updateDiff(){chillB.classList.toggle('on',diff==='chill');easyB.classList.toggle('on',diff==='easy');normB.classList.toggle('on',diff==='normal');hardB.classList.toggle('on',diff==='hard');challB.classList.toggle('on',diff==='chall');extremeB.classList.toggle('on',diff==='extreme');}
-chillB.onclick=function(){diff='chill';updateDiff();playSnd('click');};
-easyB.onclick=function(){diff='easy';updateDiff();playSnd('click');};
-normB.onclick=function(){diff='normal';updateDiff();playSnd('click');};
-hardB.onclick=function(){diff='hard';updateDiff();playSnd('click');};
-challB.onclick=function(){diff='chall';updateDiff();playSnd('click');};
-extremeB.onclick=function(){diff='extreme';updateDiff();playSnd('click');};
+chillB.onclick=function(){diff='chill';updateDiff();lss('diff','chill');playSnd('click');};
+easyB.onclick=function(){diff='easy';updateDiff();lss('diff','easy');playSnd('click');};
+normB.onclick=function(){diff='normal';updateDiff();lss('diff','normal');playSnd('click');};
+hardB.onclick=function(){diff='hard';updateDiff();lss('diff','hard');playSnd('click');};
+challB.onclick=function(){diff='chall';updateDiff();lss('diff','chall');playSnd('click');};
+extremeB.onclick=function(){diff='extreme';updateDiff();lss('diff','extreme');playSnd('click');};
 var abtEl=document.getElementById('about'),abtBtn=document.getElementById('abtBtn'),abtClose=document.getElementById('abtClose'),abtC=document.getElementById('abtContent');
 var gOff=document.getElementById('gOff'),gLight=document.getElementById('gLight'),gMid=document.getElementById('gMid'),gDark=document.getElementById('gDark');
 var skGrad=document.getElementById('skGrad'),skSolid=document.getElementById('skSolid'),skStripe=document.getElementById('skStripe'),skRainbow=document.getElementById('skRainbow'),skNeon=document.getElementById('skNeon');
 function updateGridBtn(){gOff.classList.toggle('on',gridOp===0);gLight.classList.toggle('on',gridOp===.03);gMid.classList.toggle('on',gridOp===.08);gDark.classList.toggle('on',gridOp===.2);}
-gOff.onclick=function(){gridOp=0;updateGridBtn();if(S.p==='play'||S.pa)draw();};
-gLight.onclick=function(){gridOp=.03;updateGridBtn();if(S.p==='play'||S.pa)draw();};
-gMid.onclick=function(){gridOp=.08;updateGridBtn();if(S.p==='play'||S.pa)draw();};
-gDark.onclick=function(){gridOp=.2;updateGridBtn();if(S.p==='play'||S.pa)draw();};
+gOff.onclick=function(){gridOp=0;updateGridBtn();lss('gridOp',0);if(S.p==='play'||S.pa)draw();};
+gLight.onclick=function(){gridOp=.03;updateGridBtn();lss('gridOp',.03);if(S.p==='play'||S.pa)draw();};
+gMid.onclick=function(){gridOp=.08;updateGridBtn();lss('gridOp',.08);if(S.p==='play'||S.pa)draw();};
+gDark.onclick=function(){gridOp=.2;updateGridBtn();lss('gridOp',.2);if(S.p==='play'||S.pa)draw();};
 function updateSkinBtn(){skGrad.classList.toggle('on',snakeSkin==='gradient');skSolid.classList.toggle('on',snakeSkin==='solid');skStripe.classList.toggle('on',snakeSkin==='stripe');skRainbow.classList.toggle('on',snakeSkin==='rainbow');skNeon.classList.toggle('on',snakeSkin==='neon');}
-skGrad.onclick=function(){snakeSkin='gradient';updateSkinBtn();if(S.p==='play'||S.pa)draw();};
-skSolid.onclick=function(){snakeSkin='solid';updateSkinBtn();if(S.p==='play'||S.pa)draw();};
-skStripe.onclick=function(){snakeSkin='stripe';updateSkinBtn();if(S.p==='play'||S.pa)draw();};
-skRainbow.onclick=function(){snakeSkin='rainbow';updateSkinBtn();if(S.p==='play'||S.pa)draw();};
-skNeon.onclick=function(){snakeSkin='neon';updateSkinBtn();if(S.p==='play'||S.pa)draw();};
+skGrad.onclick=function(){snakeSkin='gradient';updateSkinBtn();lss('skin','gradient');if(S.p==='play'||S.pa)draw();};
+skSolid.onclick=function(){snakeSkin='solid';updateSkinBtn();lss('skin','solid');if(S.p==='play'||S.pa)draw();};
+skStripe.onclick=function(){snakeSkin='stripe';updateSkinBtn();lss('skin','stripe');if(S.p==='play'||S.pa)draw();};
+skRainbow.onclick=function(){snakeSkin='rainbow';updateSkinBtn();lss('skin','rainbow');if(S.p==='play'||S.pa)draw();};
+skNeon.onclick=function(){snakeSkin='neon';updateSkinBtn();lss('skin','neon');if(S.p==='play'||S.pa)draw();};
 abtBtn.onclick=function(){
   var stG=ls('st_games',0),stF=ls('st_food',0),stL=ls('st_longest',0),stS=ls('st_score',0),stT=ls('st_maxtime',0);
   var hsList='';MODES.forEach(function(m){var h=getHS(m.id);if(h>0)hsList+=m.icon+m.label+':'+h+' ';});
-  abtC.innerHTML='<b>🎮 游戏模式</b><br>🏆闯关(每关随机墙体)&nbsp;🤖AI&nbsp;🧱迷宫&nbsp;⚔️对战&nbsp;⏱限时&nbsp;♾无尽(动态障碍)&nbsp;🎯道具赛&nbsp;📅每日<br><br><b>🍎 食物系统</b><br>每2s自动生成1个，最多6个同屏<br>🍎+1&nbsp;🍊+2&nbsp;🍇+3&nbsp;🍒+4&nbsp;🍉+5&nbsp;🍀双倍道具&nbsp;⭐+8<br>🔥连击：5秒内连续吃触发×2~×5倍<br><br><b>⚡ 难度</b><br>休闲×0.5 / 简单×0.7 / 普通×1 / 困难×1.5 / 挑战×2 / 极限×3<br><br><b>⌨️ 操作</b><br>P1: ↑↓←→&nbsp;|&nbsp;P2: WASD&nbsp;|&nbsp;空格暂停&nbsp;|&nbsp;ESC菜单<br><br><b>👥 双人</b><br>菜单底部切2P，双蛇同屏竞技<br><br><b>🎨 主题</b><br>底部16色圆圈点击即换肤，含🌈彩虹蛇<br>模式图标已重绘为Material Design风格<br><br><b>📏 网格</b><br>关/淡/中/深 四级可调<br><br><b>🎵 音效</b><br>右上角🔊/🔇按钮开关<br><br><b>📊 生涯数据</b><br>累计: <b>'+stG+'</b>局 · 总分: <b>'+stS+'</b>分'+(stG>0?' · 均分: <b>'+Math.round(stS/stG)+'</b>':'')+'<br>吃食物: <b>'+stF+'</b>个 · 最长蛇: <b>'+stL+'</b>节 · 最长存活: <b>'+stT+'</b>秒<br>'+(hsList?'🏆 最高分: '+hsList:'')+'<br><br><b>🔗 开源</b><br>github.com/vxxy77/eaye-snake<br><br><b>🎬 制作</b><br>子柒 · 设计 & 策划<br>Hermes AI · 开发 & 实现<br><br>💝 Eaye蛇送给我的彤彤宝宝';
+  abtC.innerHTML='<b>🎮 游戏模式</b><br>🏆闯关(每关随机墙体)&nbsp;👹BOSS&nbsp;🧱迷宫&nbsp;⚔️对战&nbsp;⏱限时&nbsp;♾无尽(动态障碍)&nbsp;🎯道具赛&nbsp;📅每日<br><br><b>🍎 食物系统</b><br>每2s自动生成1个，最多6个同屏<br>🍎+1&nbsp;🍊+2&nbsp;🍇+3&nbsp;🍒+4&nbsp;🍉+5&nbsp;🍀双倍道具&nbsp;⭐+8<br>🔥连击：5秒内连续吃触发×2~×5倍<br><br><b>⚡ 难度</b><br>休闲×0.5 / 简单×0.7 / 普通×1 / 困难×1.5 / 挑战×2 / 极限×3<br><br><b>⌨️ 操作</b><br>P1: ↑↓←→&nbsp;|&nbsp;P2: WASD&nbsp;|&nbsp;空格暂停&nbsp;|&nbsp;ESC菜单<br><br><b>👥 双人</b><br>菜单底部切2P，双蛇同屏竞技<br><br><b>🎨 主题</b><br>底部16色圆圈点击即换肤，含🌈彩虹蛇<br>模式图标已重绘为Material Design风格<br><br><b>📏 网格</b><br>关/淡/中/深 四级可调<br><br><b>🐍 蛇皮</b><br>渐变/纯色/条纹/彩虹/霓虹 独立于主题<br><br><b>🎵 音效</b><br>右上角🔊/🔇按钮开关<br><br><b>🏅 成就</b><br>'+(function(){var r='';ACHIEVEMENTS.forEach(function(a){var u=ls('ach_'+a.id,false);r+=(u?'✅':'⬜')+' '+a.icon+' '+a.name+' — '+a.desc+'<br>';});return r;})()+'<br><b>📊 生涯数据</b><br>累计: <b>'+stG+'</b>局 · 总分: <b>'+stS+'</b>分'+(stG>0?' · 均分: <b>'+Math.round(stS/stG)+'</b>':'')+'<br>吃食物: <b>'+stF+'</b>个 · 最长蛇: <b>'+stL+'</b>节 · 最长存活: <b>'+stT+'</b>秒<br>'+(hsList?'🏆 最高分: '+hsList:'')+'<br><br><b>🔗 开源</b><br>github.com/vxxy77/eaye-snake<br><br><b>🎬 制作</b><br>子柒 · 设计 & 策划<br>Hermes AI · 开发 & 实现<br><br>💝 Eaye蛇送给我的彤彤宝宝';
   mEl.classList.remove('on');abtEl.classList.add('on');playSnd('click');
 };
 abtClose.onclick=function(){abtEl.classList.remove('on');mEl.classList.add('on');};
-init();initThemes();showModes();draw();
+init();initThemes();applyTheme(ls('theme',0));showModes();draw();updateDiff();updateSkinBtn();updateGridBtn();
 // rAF smooth animation
 (function ani(){requestAnimationFrame(ani);if(S.p==='play'&&!S.pa&&S.t&&Date.now()-S._lastMove<S.spd)draw();})();
 </script></body></html>
