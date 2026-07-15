@@ -1,0 +1,23 @@
+{
+  "name": "eaye-snake",
+  "version": "1.0.0",
+  "description": "一款功能丰富的网页贪吃蛇游戏，支持 **8种游戏模式**、**16套主题**、**7种食物**、**双人对战**、**连击系统**、**难度选择**、**蛇皮换肤**、**平滑动画** 等特性。最新版本 **v3.40**。",
+  "main": "sw.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vxxy77/eaye-snake.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vxxy77/eaye-snake/issues"
+  },
+  "homepage": "https://github.com/vxxy77/eaye-snake#readme",
+  "dependencies": {
+    "pngjs": "^7.0.0"
+  }
+}
